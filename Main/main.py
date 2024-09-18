@@ -1,4 +1,6 @@
-import pygame, sys
+import pygame
+import sys
+from Scripts.entities import PhysicsEntity
 
 class Game:
     def __init__(self):
@@ -9,18 +11,34 @@ class Game:
 
         self.clock = pygame.time.Clock()
 
-        self.img = pygame.image.load("data/images/avatar.png") #avatar
+        self.img = pygame.image.load("data/images/entities/player.png") #avatar
         self.img_pos = [220,500]
         self.bg = pygame.image.load("data/images/bg.png")
         self.bg_pos = [0, 0]
 
         self.movement = [False,False, False, False] #movement variable (up key, down key, right key, left key)
 
+        self. collision_area = pygame.Rect(50,50,300,50)
+        self.player =  PhysicsEntity(self, 'player', (50,50), (8,15))
+
     def run(self):
         while True:
             self.screen.blit(self.bg, self.bg_pos) #blits the screen with background
+            self.img_pos[1] += self.movement[1] - self.movement[
+                0]  # updates the vertical position and addss/subtracts from y
+            # based on input.
+            self.screen.blit(self.img, self.img_pos)  # BLIT's the updated position onto the screen based on if self.movement is true or false.
 
-            #updage avatar position based on movement flags
+            '''To test if Collisions working, use:
+            img_r = pygame.Rect(self.img_pos[0], self.img_pos[1], self.img.get_width(), self.img.get_height()) #creates a rect (x, y width, height) with same dimentions of the img we dew.
+
+            pygame.Rect(*self.img_pos, *self.img.get_size())
+            if img_r.colliderect(self.collision_area):
+                pygame.draw.rect(self.screen, (0,100,255), self.collision_area)
+            else:
+                pygame.draw.rect(self.screen, (0,50,155), self.collision_area)
+            '''
+            #updade avatar position based on movement flags
             if self.movement[0]: #up
                 self.img_pos[1] -=5 #moves y up
             if self.movement[1]:  # down
@@ -31,15 +49,11 @@ class Game:
                 self.img_pos[0] -=5 #moves x right
 
 
-            self.img_pos[1] += self.movement[1] - self.movement[0] #updates the vertical position and addss/subtracts from y
-                                                                    #based on input.
-            self.screen.blit(self.img, self.img_pos) #BLIT's the updated position onto the screen based on if self.movement is true or false.
-
             for event in pygame.event.get(): #Event Loop
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                if event.type == pygame.KEYDOWN: #checks if a key is being pressed (key is down)
+                if event.type == pygame.KEYDOWN: #checks if a key is being pressed (key is down)/ Character movement
                     if event.key == pygame.K_w or event.key == pygame.K_UP: #checks if key is the up arrow
                         self.movement[0] = True #it says its true we're pressing the up key down
                     if event.key == pygame.K_s or event.key == pygame.K_DOWN:

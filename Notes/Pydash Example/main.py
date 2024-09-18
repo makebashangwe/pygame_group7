@@ -114,7 +114,7 @@ class Player(pygame.sprite.Sprite):
                 sees if player is colliding with any obstacles"""
                 if isinstance(p, Orb) and (keys[pygame.K_UP] or keys[pygame.K_SPACE]):
                     pygame.draw.circle(alpha_surf, (255, 255, 0), p.rect.center, 18)
-                    screen.blit(pygame.image.load("../Main/data/images/editor-0.9s-47px.gif"), p.rect.center)
+                    screen.blit(pygame.image.load("../../Main/data/images/editor-0.9s-47px.gif"), p.rect.center)
                     self.jump_amount = 12  # gives a little boost when hit orb
                     self.jump()
                     self.jump_amount = 10  # return jump_amount to normal
@@ -492,7 +492,7 @@ Global variables
 font = pygame.font.SysFont("lucidaconsole", 20)
 
 # square block face is main character the icon of the window is the block face
-avatar = pygame.image.load(os.path.join("../Main/data/images", "avatar.png"))  # load the main character
+avatar = pygame.image.load(os.path.join("../../Main/data/images", "player.png"))  # load the main character
 pygame.display.set_icon(avatar)
 #  this surface has an alpha value with the colors, so the player trail will fade away using opacity
 alpha_surf = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
@@ -502,15 +502,15 @@ player_sprite = pygame.sprite.Group()
 elements = pygame.sprite.Group()
 
 # images
-spike = pygame.image.load(os.path.join("../Main/data/images", "obj-spike.png"))
+spike = pygame.image.load(os.path.join("../../Main/data/images", "obj-spike.png"))
 spike = resize(spike)
-coin = pygame.image.load(os.path.join("../Main/data/images", "coin.png"))
+coin = pygame.image.load(os.path.join("../../Main/data/images", "coin.png"))
 coin = pygame.transform.smoothscale(coin, (32, 32))
-block = pygame.image.load(os.path.join("../Main/data/images", "block_1.png"))
+block = pygame.image.load(os.path.join("../../Main/data/images", "block_1.png"))
 block = pygame.transform.smoothscale(block, (32, 32))
-orb = pygame.image.load((os.path.join("../Main/data/images", "orb-yellow.png")))
+orb = pygame.image.load((os.path.join("../../Main/data/images", "orb-yellow.png")))
 orb = pygame.transform.smoothscale(orb, (32, 32))
-trick = pygame.image.load((os.path.join("../Main/data/images", "obj-breakable.png")))
+trick = pygame.image.load((os.path.join("../../Main/data/images", "obj-breakable.png")))
 trick = pygame.transform.smoothscale(trick, (32, 32))
 
 #  ints
@@ -545,7 +545,7 @@ music = pygame.mixer_music.load(os.path.join("music", "bossfight-Vextron.mp3"))
 pygame.mixer_music.play()
 
 # bg image
-bg = pygame.image.load(os.path.join("../Main/data/images", "bg.png"))
+bg = pygame.image.load(os.path.join("../../Main/data/images", "bg.png"))
 
 # create object of player class
 player = Player(avatar, elements, (150, 150), player_sprite)

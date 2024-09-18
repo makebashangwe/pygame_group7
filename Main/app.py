@@ -14,11 +14,22 @@ class Game:
         self.bg = pygame.image.load("data/images/bg.png")
         self.bg_pos = [0, 0]
 
-        self.movement = [False,False] #movement variable (upkey, down key)
+        self.movement = [False,False, False, False] #movement variable (up key, down key, right key, left key)
 
     def run(self):
         while True:
             self.screen.blit(self.bg, self.bg_pos) #blits the screen with background
+
+            #updage avatar position based on movement flags
+            if self.movement[0]: #up
+                self.img_pos[1] -=5 #moves y up
+            if self.movement[1]:  # down
+                self.img_pos[1] +=5 #moves y down
+            if self.movement[2]:  # left
+                self.img_pos[0] +=5 # moves x left
+            if self.movement[3]:  # right
+                self.img_pos[0] -=5 #moves x right
+
 
             self.img_pos[1] += self.movement[1] - self.movement[0] #updates the vertical position and addss/subtracts from y
                                                                     #based on input.
@@ -29,15 +40,24 @@ class Game:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.KEYDOWN: #checks if a key is being pressed (key is down)
-                    if event.key == pygame.K_UP: #checks if key is the up arrow
+                    if event.key == pygame.K_w or event.key == pygame.K_UP: #checks if key is the up arrow
                         self.movement[0] = True #it says its true we're pressing the up key down
-                    if event.key == pygame.K_DOWN:
+                    if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                         self.movement[1] = True #it sets self.movement to true, pressing down key down
+                    if event.key == pygame.K_a or event.key == pygame.K_RIGHT:
+                        self.movement[2] = True
+                    if event.key == pygame.K_d or event.key == pygame.K_LEFT:
+                        self.movement[3] = True
                 if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_UP: #checks if a key was released (key is up)
+                    if event.key == pygame.K_w or event.key ==pygame.K_UP: #checks if a key was released (key is up)
                         self.movement[0] = False #it sets  up self.movement to false because the key was released.
-                    if event.key == pygame.K_DOWN:
+                    if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                         self.movement[1] = False #it sets self.movement to false since the key was released.
+                    if event.key == pygame.K_a or event.key == pygame.K_RIGHT:
+                        self.movement[2] = False
+                    if event.key == pygame.K_d or event.key == pygame.K_LEFT:
+                        self.movement[3] = False
+
             pygame.display.update()
             self.clock.tick(60)
 Game().run()
